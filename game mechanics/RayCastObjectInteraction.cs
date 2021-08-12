@@ -35,7 +35,6 @@ public class RayCastColorChange : MonoBehaviour
             }
         if (hitName != "exit"){
             exitTimer = 0;
-            Debug.Log(exitTimer);
             exitStatusWhole.SetActive(false);
         }
         if (hit.collider != null){
@@ -45,25 +44,36 @@ public class RayCastColorChange : MonoBehaviour
                Debug.Log(hitName + "hitted");
 
 
-//if you want to have a gameobject named exit to look at to exit after a few seconds.
-        if (hitName == "exit"){
-            exitTimer ++;
-            Debug.Log(exitTimer);
-            exit.transform.Rotate(-.25f,0,0);
-            exitText.GetComponentInChildren<Text>().text = "Exiting " + Math.Ceiling(exitTimer/8f) + "/100";
-            offset = -200 + (exitTimer/4);
-            exitStatusBar.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal , (offset + 200));
-            exitStatusBar.GetComponent<RectTransform>().anchoredPosition = new Vector3(offset/2, -110, 0);
-            exitStatusWhole.SetActive(true);
-            if (exitTimer >= 800) {
-                Debug.Log("exiting");
-    #if UNITY_EDITOR
-         UnityEditor.EditorApplication.isPlaying = false;
-     #else
-         Application.Quit();
-     #endif
-            }
+//switchcase to make it easier to add gameobject names and look functionality               
+
+        switch(hitName){
+        case "object1":
+        //put functionality here
+        break;
+        case "object2":
+        break;
+        //if you want to create a 3d gameobject named exit to exit the application, also include an exit bar UI element with a background
+        case "exit":
+        exitTimer ++;
+        exit.transform.Rotate(-.25f,0,0);
+        exitText.GetComponentInChildren<Text>().text = "Exiting " + Math.Ceiling(exitTimer/8f) + "/100";
+        offset = -200 + (exitTimer/4);
+        exitStatusBar.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal , (offset + 200));
+        exitStatusBar.GetComponent<RectTransform>().anchoredPosition = new Vector3(offset/2, -110, 0);
+        exitStatusWhole.SetActive(true);
+        if (exitTimer >= 800) {
+            Debug.Log("exiting");
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #else
+            Application.Quit();
+            #endif
         }
+        break;
+        default:
+        break;
+        }
+
         }
     }
 }
